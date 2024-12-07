@@ -81,15 +81,15 @@
     <div class="carousel-item">
       <img src="assets/j4.jpg" class="d-block w-100" alt="Slide 3">
       <div class="carousel-caption d-none d-md-block">
-        <h5 class="golden-text">Join the Conversation</h5>
-        <p class="golden-text-small">Connect with like-minded individuals..</p>
+        <h5 class="golden-text">Unleash Your Creativity</h5>
+        <p class="golden-text-small">Fuel your imagination with thought-provoking content...</p>
       </div>
     </div>
     <div class="carousel-item">
       <img src="assets/j5.jpg" class="d-block w-100" alt="Slide 4">
       <div class="carousel-caption d-none d-md-block">
-        <h5 class="golden-text">Join the Conversation</h5>
-        <p class="golden-text-small">Connect with like-minded individuals..</p>
+        <h5 class="golden-text">Embrace the Journey</h5>
+        <p class="golden-text-small">Join the community in exploring new ideas and perspectives...</p>
       </div>
     </div>
     <div class="carousel-item">
@@ -122,7 +122,7 @@
       <div class="col-md-8">
         <!-- Blog List -->
         <section id="blogs">
-          <h2>Latest Blogs</h2>
+          <h2>My Blogs</h2>
           <div class="list-group">
             
             <a href="blogpost.html?id=1" class="list-group-item list-group-item-action blog-title">
@@ -136,6 +136,10 @@
             <a href="blogpost.html?id=3" class="list-group-item list-group-item-action blog-title">
               <h5>Where Are You in This Universe?</h5>
               <p class="mb-1">Have you ever thought : Where Are You in This Universe?</p>
+            </a>
+            <a href="blogpost.html?id=4" class="list-group-item list-group-item-action blog-title">
+              <h5>The Power of Positivity in Challenging Times</h5>
+              <p class="mb-1">Think Positive</p>
             </a>
             
           </div>
@@ -160,30 +164,145 @@
 
       <!-- Sidebar -->
       <aside class="col-md-4">
+        
         <div class="sidebar mb-4">
-          <h4>Today's Date</h4>
+          <h4>Today</h4>
           <p id="currentDate"></p>
-        </div>
+          
+          <h4>Calendar</h4>
+          <div id="calendar"></div>
+      </div>
+ 
+
         <div class="sidebar mb-4">
           <h4>Latest Blogs</h4>
-          <ul class="list-unstyled">
-            <li><a href="#">Blog 1</a></li>
-            <li><a href="#">Blog 2</a></li>
-            <li><a href="#">Blog 3</a></li>
-          </ul>
+          <ol class="list-unstyled">
+            <li><a href="blogpost.html?id=1">Time is the Most Precious and Powerful Thing in the Universe</a></li>
+            <li><a href="blogpost.html?id=2">The Fascinating Concept of Time Travel</a></li>
+            <li><a href="blogpost.html?id=3">Where Are You in This Universe?</a></li>
+            <li><a href="blogpost.html?id=4">The Power of Positivity in Challenging Times</a></li>
+        </ol>
+        
         </div>
-        <div class="sidebar">
-          <h4>Quick Links</h4>
-          <ul class="list-unstyled">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><a href="#">About</a></li>
-          </ul>
-        </div>
+
       </aside>
     </div>
   </div>
 
+
+
+  <script>
+    // Simulating a database of blog posts
+    const blogs = [
+      {
+        title: "Time is the Most Precious and Powerful Thing in the Universe",
+        link: "blog-1.html"
+      },
+      {
+        title: "Exploring the Depths of Time Travel",
+        link: "blog-2.html"
+      },
+      {
+        title: "Where Are You in This Universe?",
+        link: "blog-3.html"
+      },
+      {
+        title: "The Power of Positivity in Challenging Times",
+        link: "blog-4.html"
+      }
+    ];
+   
+    // Function to populate the list of blogs dynamically
+    function generateBlogLinks() {
+      const blogListContainer = document.getElementById('blogList');
+      blogListContainer.innerHTML = ""; // Clear existing content
+    
+      // Loop through each blog and create a list item with a link
+      blogs.forEach(blog => {
+        const listItem = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = blog.link;
+        link.innerText = blog.title;
+        listItem.appendChild(link);
+        blogListContainer.appendChild(listItem);
+      });
+    }
+    
+    // Call function to generate blog links
+    generateBlogLinks();
+    </script>
+
+
+  
+  <script>
+    // Function to display today's date
+const today = new Date();
+document.getElementById('currentDate').innerHTML = today.toDateString();
+
+// Function to generate a calendar for the current month
+function generateCalendar() {
+    const currentMonth = today.getMonth();  // 0-11 for Jan-Dec
+    const currentYear = today.getFullYear();
+    
+    // Get the first day of the month
+    const firstDay = new Date(currentYear, currentMonth, 1);
+    const lastDay = new Date(currentYear, currentMonth + 1, 0); // Last day of the month
+    
+    // Get the number of days in the month
+    const daysInMonth = lastDay.getDate();
+    
+    let calendarHTML = '<table class="table table-bordered">';
+    calendarHTML += '<thead><tr>';
+    calendarHTML += '<th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th>';
+    calendarHTML += '</tr></thead>';
+    calendarHTML += '<tbody><tr>';
+    
+    // Add empty cells before the first day of the month
+    for (let i = 0; i < firstDay.getDay(); i++) {
+        calendarHTML += '<td></td>';
+    }
+    
+    // Add days to the calendar
+    for (let day = 1; day <= daysInMonth; day++) {
+        const currentDay = new Date(currentYear, currentMonth, day);
+        
+        // Mark today's date by adding a class to today's cell
+        const isToday = currentDay.toDateString() === today.toDateString() ? 'today' : '';
+        
+        calendarHTML += `<td class="${isToday}">${day}</td>`;
+        
+        // If it's the end of the week, start a new row
+        if (currentDay.getDay() === 6) {
+            calendarHTML += '</tr><tr>';
+        }
+    }
+    
+    // Fill in any remaining empty cells for the last week
+    const lastDayOfWeek = lastDay.getDay();
+    for (let i = lastDayOfWeek + 1; i < 7; i++) {
+        calendarHTML += '<td></td>';
+    }
+    
+    calendarHTML += '</tr></tbody></table>';
+    
+    // Insert the calendar into the HTML
+    document.getElementById('calendar').innerHTML = calendarHTML;
+}
+
+// Add CSS for today's highlighted date
+const style = document.createElement('style');
+style.innerHTML = `
+  .today {
+    background-color: #ffeb3b; /* Highlight today's date with yellow */
+    font-weight: bold;
+  }
+`;
+document.head.appendChild(style);
+
+// Generate the calendar on page load
+generateCalendar();
+
+  </script>
   <!-- Footer -->
 </script>
 <!-- Back to Top Button -->
